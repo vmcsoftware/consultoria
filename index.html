@@ -1201,7 +1201,19 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        
+        // Ignore links que são apenas "#" (links de placeholder)
+        if (href === '#') {
+          // Para links de produtos/serviços, mostrar modal de informações
+          const cardTitle = this.closest('.card-modern')?.querySelector('.card-title')?.textContent;
+          if (cardTitle) {
+            showProductModal(cardTitle, this);
+          }
+          return;
+        }
+        
+        const target = document.querySelector(href);
         if (target) {
           const offsetTop = target.offsetTop - 80;
           window.scrollTo({
@@ -1211,6 +1223,252 @@
         }
       });
     });
+
+    // Função para mostrar modal de produtos/serviços
+    function showProductModal(title, element) {
+      const button = element.querySelector('i').className;
+      let modalContent = '';
+      
+      if (title.includes('E-book: Liderança Transformadora')) {
+        modalContent = `
+          <div class="mb-4">
+            <i class="fas fa-book-open" style="font-size: 4rem; color: #667eea;"></i>
+          </div>
+          <h4 class="mb-3">E-book: Liderança Transformadora</h4>
+          <p class="text-muted mb-4">
+            Um guia completo e prático para desenvolver habilidades de liderança moderna, 
+            incluindo técnicas de gestão de pessoas, comunicação eficaz e tomada de decisões estratégicas.
+          </p>
+          <ul class="list-unstyled text-start mb-4">
+            <li><i class="fas fa-check text-success me-2"></i>120 páginas de conteúdo exclusivo</li>
+            <li><i class="fas fa-check text-success me-2"></i>Cases práticos e exercícios</li>
+            <li><i class="fas fa-check text-success me-2"></i>Templates e ferramentas prontas</li>
+            <li><i class="fas fa-check text-success me-2"></i>Acesso vitalício</li>
+          </ul>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Voltar</button>
+            <button type="button" class="btn btn-modern btn-accent-modern" onclick="requestDownload('ebook-lideranca')">
+              <i class="fas fa-download me-2"></i>Solicitar Download
+            </button>
+          </div>
+        `;
+      } else if (title.includes('Kit de Dinâmicas para Equipes')) {
+        modalContent = `
+          <div class="mb-4">
+            <i class="fas fa-puzzle-piece" style="font-size: 4rem; color: #667eea;"></i>
+          </div>
+          <h4 class="mb-3">Kit de Dinâmicas para Equipes</h4>
+          <p class="text-muted mb-4">
+            Conjunto completo de atividades práticas e dinâmicas de grupo para desenvolver 
+            comunicação, trabalho em equipe, liderança e resolução de conflitos.
+          </p>
+          <ul class="list-unstyled text-start mb-4">
+            <li><i class="fas fa-check text-success me-2"></i>50+ dinâmicas testadas</li>
+            <li><i class="fas fa-check text-success me-2"></i>Instruções passo a passo</li>
+            <li><i class="fas fa-check text-success me-2"></i>Materiais necessários listados</li>
+            <li><i class="fas fa-check text-success me-2"></i>Tempo de duração de cada atividade</li>
+          </ul>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Voltar</button>
+            <button type="button" class="btn btn-modern btn-accent-modern" onclick="requestDownload('kit-dinamicas')">
+              <i class="fas fa-eye me-2"></i>Ver Kit Completo
+            </button>
+          </div>
+        `;
+      } else if (title.includes('Mentoria para Líderes')) {
+        modalContent = `
+          <div class="mb-4">
+            <i class="fas fa-user-graduate" style="font-size: 4rem; color: #667eea;"></i>
+          </div>
+          <h4 class="mb-3">Mentoria para Líderes</h4>
+          <p class="text-muted mb-4">
+            Programa de mentoria individualizada para líderes que desejam potencializar 
+            sua performance e desenvolver habilidades avançadas de gestão.
+          </p>
+          <ul class="list-unstyled text-start mb-4">
+            <li><i class="fas fa-check text-success me-2"></i>Sessões individuais personalizadas</li>
+            <li><i class="fas fa-check text-success me-2"></i>Plano de desenvolvimento único</li>
+            <li><i class="fas fa-check text-success me-2"></i>Acompanhamento contínuo</li>
+            <li><i class="fas fa-check text-success me-2"></i>Acesso a materiais exclusivos</li>
+          </ul>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Voltar</button>
+            <button type="button" class="btn btn-modern btn-accent-modern" onclick="requestMoreInfo('mentoria-lideres')">
+              <i class="fas fa-info-circle me-2"></i>Saber Mais
+            </button>
+          </div>
+        `;
+      }
+
+      const productModal = document.createElement('div');
+      productModal.innerHTML = `
+        <div class="modal fade" id="productModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border: none; border-radius: 16px;">
+              <div class="modal-body text-center p-5">
+                ${modalContent}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(productModal);
+      const modal = new bootstrap.Modal(document.getElementById('productModal'));
+      modal.show();
+      
+      // Remove modal after closing
+      document.getElementById('productModal').addEventListener('hidden.bs.modal', () => {
+        productModal.remove();
+      });
+    }
+
+    // Função para solicitar download
+    async function requestDownload(productType) {
+      try {
+        // Salvar interesse no Firebase
+        await addDoc(collection(db, 'interesseProdutos'), {
+          produto: productType,
+          acao: 'download_solicitado',
+          timestamp: serverTimestamp(),
+          userAgent: navigator.userAgent,
+          origem: 'Modal Produto'
+        });
+
+        // Fechar modal atual
+        const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+        modal.hide();
+        
+        // Mostrar formulário de contato para download
+        setTimeout(() => {
+          showDownloadForm(productType);
+        }, 300);
+        
+      } catch (error) {
+        console.error('Erro ao registrar interesse:', error);
+        showToast('Erro ao processar solicitação. Tente novamente.', 'error');
+      }
+    }
+
+    // Função para solicitar mais informações
+    async function requestMoreInfo(serviceType) {
+      try {
+        // Salvar interesse no Firebase
+        await addDoc(collection(db, 'interesseProdutos'), {
+          produto: serviceType,
+          acao: 'mais_informacoes',
+          timestamp: serverTimestamp(),
+          userAgent: navigator.userAgent,
+          origem: 'Modal Produto'
+        });
+
+        // Fechar modal e ir para formulário de contato
+        const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+        modal.hide();
+        
+        setTimeout(() => {
+          document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
+          // Preencher mensagem automaticamente
+          document.getElementById('mensagem').value = `Gostaria de saber mais sobre: ${serviceType.replace('-', ' ').toUpperCase()}`;
+          document.getElementById('mensagem').focus();
+        }, 500);
+        
+      } catch (error) {
+        console.error('Erro ao registrar interesse:', error);
+        showToast('Erro ao processar solicitação. Tente novamente.', 'error');
+      }
+    }
+
+    // Formulário para download
+    function showDownloadForm(productType) {
+      const downloadModal = document.createElement('div');
+      downloadModal.innerHTML = `
+        <div class="modal fade" id="downloadModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border: none; border-radius: 16px;">
+              <div class="modal-body p-4">
+                <h5 class="text-center mb-4">
+                  <i class="fas fa-download me-2 text-primary"></i>
+                  Solicitar Download
+                </h5>
+                <form id="downloadForm">
+                  <div class="mb-3">
+                    <label for="downloadNome" class="form-label">Nome</label>
+                    <input type="text" class="form-control form-control-modern" id="downloadNome" placeholder="Seu nome" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="downloadEmail" class="form-label">E-mail</label>
+                    <input type="email" class="form-control form-control-modern" id="downloadEmail" placeholder="seu@email.com" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="downloadEmpresa" class="form-label">Empresa (opcional)</label>
+                    <input type="text" class="form-control form-control-modern" id="downloadEmpresa" placeholder="Nome da empresa">
+                  </div>
+                  <input type="hidden" id="downloadProduto" value="${productType}">
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-secondary flex-fill" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-modern btn-accent-modern flex-fill">
+                      <i class="fas fa-paper-plane me-2"></i>Enviar
+                      <span class="spinner-border spinner-border-sm ms-2 d-none" id="downloadLoading"></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(downloadModal);
+      const modal = new bootstrap.Modal(document.getElementById('downloadModal'));
+      modal.show();
+      
+      // Handle form submission
+      document.getElementById('downloadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const loadingSpinner = document.getElementById('downloadLoading');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        
+        const formData = {
+          nome: document.getElementById('downloadNome').value.trim(),
+          email: document.getElementById('downloadEmail').value.trim(),
+          empresa: document.getElementById('downloadEmpresa').value.trim(),
+          produto: document.getElementById('downloadProduto').value,
+          acao: 'download_solicitado',
+          timestamp: serverTimestamp(),
+          origem: 'Modal Download'
+        };
+
+        if (!formData.nome || !formData.email) {
+          alert('Por favor, preencha os campos obrigatórios.');
+          return;
+        }
+
+        loadingSpinner.classList.remove('d-none');
+        submitBtn.disabled = true;
+
+        try {
+          await addDoc(collection(db, 'solicitacaoDownload'), formData);
+          
+          loadingSpinner.classList.add('d-none');
+          submitBtn.disabled = false;
+          
+          modal.hide();
+          showToast('Solicitação enviada! Você receberá o download por e-mail em breve. 📧', 'success');
+          
+        } catch (error) {
+          console.error('Erro ao enviar solicitação:', error);
+          loadingSpinner.classList.add('d-none');
+          submitBtn.disabled = false;
+          showToast('Erro ao enviar solicitação. Tente novamente.', 'error');
+        }
+      });
+      
+      // Remove modal after closing
+      document.getElementById('downloadModal').addEventListener('hidden.bs.modal', () => {
+        downloadModal.remove();
+      });
+    }
 
     // Hover effects
     document.querySelectorAll('.hover-effect').forEach(el => {
