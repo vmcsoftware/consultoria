@@ -876,6 +876,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
   <!-- Firebase SDK -->
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -905,7 +908,12 @@
     window.addDoc = addDoc;
     window.serverTimestamp = serverTimestamp;
     
-    console.log("Firebase inicializado com sucesso!");
+    // Initialize EmailJS
+    emailjs.init({
+      publicKey: "YOUR_PUBLIC_KEY", // Substituir pela sua chave pública do EmailJS
+    });
+    
+    console.log("Firebase e EmailJS inicializados com sucesso!");
   </script>
 
   <script>
@@ -994,6 +1002,12 @@
         // Save to Firebase Firestore
         await addDoc(collection(db, 'contatos'), formData);
         
+        // Send email notification using EmailJS
+        await sendEmailNotification(formData);
+        
+        // Send confirmation email to client
+        await sendConfirmationEmail(formData.email, formData.nome);
+        
         // Success feedback
         loadingSpinner.classList.add('d-none');
         submitBtn.classList.remove('loading');
@@ -1006,7 +1020,7 @@
         e.target.reset();
         
         // Log success (for analytics)
-        console.log('Formulário enviado com sucesso para Firebase!');
+        console.log('Formulário enviado com sucesso para Firebase e e-mail enviado!');
         
       } catch (error) {
         console.error('Erro ao enviar formulário:', error);
@@ -1090,6 +1104,56 @@
       document.getElementById('errorModal').addEventListener('hidden.bs.modal', () => {
         errorModal.remove();
       });
+    }
+
+    // Função para enviar e-mail via EmailJS
+    async function sendEmailNotification(formData) {
+      const templateParams = {
+        to_name: 'Equipe Potencialize',
+        from_name: formData.nome,
+        from_email: formData.email,
+        empresa: formData.empresa || 'Não informado',
+        telefone: formData.telefone || 'Não informado',
+        message: formData.mensagem,
+        newsletter: formData.newsletter ? 'Sim' : 'Não',
+        data_envio: new Date().toLocaleString('pt-BR'),
+        origem: formData.origem
+      };
+
+      try {
+        const response = await emailjs.send(
+          'YOUR_SERVICE_ID',     // Substituir pelo seu Service ID do EmailJS
+          'YOUR_TEMPLATE_ID',    // Substituir pelo seu Template ID do EmailJS
+          templateParams
+        );
+        
+        console.log('E-mail enviado com sucesso:', response);
+        return response;
+      } catch (error) {
+        console.error('Erro ao enviar e-mail:', error);
+        throw error;
+      }
+    }
+
+    // Função para enviar e-mail de confirmação para o cliente
+    async function sendConfirmationEmail(clientEmail, clientName) {
+      const templateParams = {
+        to_name: clientName,
+        to_email: clientEmail,
+        company_name: 'Potencialize Consultoria',
+        message: 'Recebemos sua mensagem e entraremos em contato em breve!'
+      };
+
+      try {
+        await emailjs.send(
+          'YOUR_SERVICE_ID',           // Mesmo Service ID
+          'YOUR_CONFIRMATION_TEMPLATE_ID', // Template para confirmação
+          templateParams
+        );
+        console.log('E-mail de confirmação enviado para o cliente');
+      } catch (error) {
+        console.error('Erro ao enviar e-mail de confirmação:', error);
+      }
     }
 
     // Newsletter subscription
@@ -1450,6 +1514,9 @@
         try {
           await addDoc(collection(db, 'solicitacaoDownload'), formData);
           
+          // Send download email notification
+          await sendDownloadEmail(formData);
+          
           loadingSpinner.classList.add('d-none');
           submitBtn.disabled = false;
           
@@ -1468,6 +1535,54 @@
       document.getElementById('downloadModal').addEventListener('hidden.bs.modal', () => {
         downloadModal.remove();
       });
+    }
+
+    // Função para enviar e-mail de download
+    async function sendDownloadEmail(formData) {
+      const templateParams = {
+        to_name: 'Equipe Potencialize',
+        from_name: formData.nome,
+        from_email: formData.email,
+        empresa: formData.empresa || 'Não informado',
+        produto_solicitado: formData.produto,
+        data_solicitacao: new Date().toLocaleString('pt-BR'),
+        origem: formData.origem
+      };
+
+      try {
+        await emailjs.send(
+          'YOUR_SERVICE_ID',
+          'YOUR_DOWNLOAD_TEMPLATE_ID', // Template específico para downloads
+          templateParams
+        );
+        
+        // Enviar e-mail de confirmação para o cliente
+        await sendDownloadConfirmation(formData.email, formData.nome, formData.produto);
+        
+      } catch (error) {
+        console.error('Erro ao enviar e-mail de download:', error);
+        throw error;
+      }
+    }
+
+    // Função para enviar confirmação de download
+    async function sendDownloadConfirmation(clientEmail, clientName, produto) {
+      const templateParams = {
+        to_name: clientName,
+        to_email: clientEmail,
+        produto_nome: produto.replace('-', ' ').toUpperCase(),
+        company_name: 'Potencialize Consultoria'
+      };
+
+      try {
+        await emailjs.send(
+          'YOUR_SERVICE_ID',
+          'YOUR_DOWNLOAD_CONFIRMATION_ID', // Template de confirmação de download
+          templateParams
+        );
+      } catch (error) {
+        console.error('Erro ao enviar confirmação de download:', error);
+      }
     }
 
     // Hover effects
