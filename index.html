@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Potencialize Consultoria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      --text-primary: #2c3e50;
+      --text-secondary: #7f8c8d;
+      --border-radius: 16px;
+      --box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    /* Scroll suave */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Animações */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition);
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar moderna */
+    .navbar-modern {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section Ultra Moderno */
+    .hero-modern {
+      background: var(--primary-gradient);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+      background-size: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .btn-modern {
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .btn-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-modern:hover::before {
+      left: 100%;
+    }
+
+    .btn-modern:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary-modern {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-accent-modern {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    /* Cards Ultra Modernas */
+    .card-modern {
+      border: none;
+      border-radius: var(--border-radius);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card-modern:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    .card-modern .card-img-top {
+      height: 250px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .card-modern:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .card-modern .card-body {
+      padding: 2rem;
+    }
+
+    .card-modern .card-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .card-modern .card-text {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Seções com gradientes */
+    .section-gradient {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      position: relative;
+    }
+
+    .section-dark {
+      background: var(--dark-gradient);
+      color: white;
+    }
+
+    .section-accent {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    /* Títulos modernos */
+    .section-title {
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 3rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+
+    /* Blockquotes modernos */
+    .blockquote-modern {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      border-left: 5px solid;
+      border-image: var(--accent-gradient) 1;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .blockquote-modern::before {
+      content: '"';
+      font-size: 4rem;
+      color: rgba(102, 126, 234, 0.3);
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-family: serif;
+    }
+
+    .blockquote-modern p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      padding-left: 2rem;
+    }
+
+    .blockquote-modern .blockquote-footer {
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding-left: 2rem;
+    }
+
+    /* Formulário moderno */
+    .form-modern {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      backdrop-filter: blur(20px);
+    }
+
+    .form-control-modern {
+      border: 2px solid rgba(102, 126, 234, 0.1);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .form-control-modern:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+      background: white;
+    }
+
+    .form-label-modern {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Footer moderno */
+    .footer-modern {
+      background: var(--dark-gradient);
+      position: relative;
+    }
+
+    .footer-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--accent-gradient);
+    }
+
+    /* Responsividade aprimorada */
+    @media (max-width: 768px) {
+      .hero-modern {
+        padding: 2rem 0;
+        text-align: center;
+      }
+      
+      .card-modern .card-body {
+        padding: 1.5rem;
+      }
+      
+      .form-modern {
+        padding: 2rem;
+        margin: 1rem;
+      }
+      
+      .blockquote-modern {
+        padding: 1.5rem;
+      }
+      
+      .section-title {
+        text-align: center;
+      }
+    }
+
+    /* Indicadores de seção */
+    .section-indicator {
+      width: 60px;
+      height: 4px;
+      background: var(--accent-gradient);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    /* Ícones flutuantes */
+    .floating-icon {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Hover effects para links */
+    a {
+      transition: var(--transition);
+    }
+
+    /* Melhorias de acessibilidade */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Loading states */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Moderna -->
+  <nav class="navbar navbar-expand-lg navbar-modern">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-rocket me-2"></i>Potencialize
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#quem-somos">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#produtos">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#treinamentos">Serviços</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#depoimentos">Depoimentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#formulario">Contato</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section Ultra Moderno -->
+  <header class="hero-modern">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-content">
+          <h1 class="hero-title text-white">
+            Potencialize <br>
+            <span class="text-warning">Seu Futuro</span>
+          </h1>
+          <p class="hero-subtitle text-white">
+            Transformamos pessoas e empresas através de soluções inovadoras em desenvolvimento humano e organizacional.
+          </p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="#formulario" class="btn btn-modern btn-primary-modern">
+              <i class="fas fa-comment-dots me-2"></i>Fale Conosco
+            </a>
+            <a href="#produtos" class="btn btn-modern btn-accent-modern">
+              <i class="fas fa-star me-2"></i>Nossos Produtos
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center">
+          <div class="floating-icon">
+            <i class="fas fa-users" style="font-size: 8rem; color: rgba(255,255,255,0.2);"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quem Somos -->
+  <section id="quem-somos" class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="section-title animate-on-scroll">Quem Somos</h2>
+          <div class="section-indicator"></div>
+          <p class="lead animate-on-scroll" style="font-size: 1.2rem; line-height: 1.8;">
+            A <strong>Potencialize Consultoria</strong> é uma empresa de vanguarda focada em soluções inovadoras para o desenvolvimento humano e organizacional. 
+          </p>
+          <p class="animate-on-scroll" style="font-size: 1.1rem; color: var(--text-secondary);">
+            Combinamos metodologias comprovadas com tecnologias modernas para oferecer treinamentos, infoprodutos e materiais práticos que facilitam mudanças profundas e geram resultados concretos em equipes e lideranças.
+          </p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-4 text-center animate-on-scroll">
+          <div class="floating-icon mb-3">
+            <i class="fas fa-lightbulb" style="font-size: 3rem; color: #667eea;"></i>
+          </div>
+          <h4>Inovação</h4>
+          <p class="text-muted">Metodologias atualizadas e ferramentas modernas</p>
+        </div>
+        <div class="col-md-4 text-center animate-on-scroll">
+          <div class="floating-icon mb-3">
+            <i class="fas fa-chart-line" style="font-size: 3rem; color: #667eea;"></i>
+          </div>
+          <h4>Resultados</h4>
+          <p class="text-muted">Foco em transformações mensuráveis e duradouras</p>
+        </div>
+        <div class="col-md-4 text-center animate-on-scroll">
+          <div class="floating-icon mb-3">
+            <i class="fas fa-handshake" style="font-size: 3rem; color: #667eea;"></i>
+          </div>
+          <h4>Parceria</h4>
+          <p class="text-muted">Acompanhamento próximo em toda jornada</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfólio de Produtos -->
+  <section id="produtos" class="py-5 section-gradient">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title animate-on-scroll">Portfólio de Produtos</h2>
+        <div class="section-indicator"></div>
+        <p class="lead animate-on-scroll">Soluções práticas e eficazes para impulsionar seu crescimento</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="card card-modern animate-on-scroll">
+            <div style="height: 250px; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-book-open" style="font-size: 4rem; color: white;"></i>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fas fa-crown me-2 text-warning"></i>
+                E-book: Liderança Transformadora
+              </h5>
+              <p class="card-text">Um guia completo para liderar com propósito, empatia e foco em resultados extraordinários.</p>
+              <a href="#" class="btn btn-modern btn-accent-modern w-100">
+                <i class="fas fa-download me-2"></i>Baixar Agora
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card card-modern animate-on-scroll">
+            <div style="height: 250px; background: var(--secondary-gradient); display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-puzzle-piece" style="font-size: 4rem; color: white;"></i>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fas fa-users me-2 text-info"></i>
+                Kit de Dinâmicas para Equipes
+              </h5>
+              <p class="card-text">Conjunto completo de atividades práticas para desenvolver comunicação, confiança e engajamento.</p>
+              <a href="#" class="btn btn-modern btn-accent-modern w-100">
+                <i class="fas fa-eye me-2"></i>Ver Kit Completo
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card card-modern animate-on-scroll">
+            <div style="height: 250px; background: var(--accent-gradient); display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-user-graduate" style="font-size: 4rem; color: white;"></i>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fas fa-star me-2 text-success"></i>
+                Mentoria para Líderes
+              </h5>
+              <p class="card-text">Acompanhamento individualizado e estratégico para potencializar a performance de gestores.</p>
+              <a href="#" class="btn btn-modern btn-accent-modern w-100">
+                <i class="fas fa-info-circle me-2"></i>Saber Mais
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Treinamentos e Consultorias -->
+  <section id="treinamentos" class="py-5 section-accent">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title animate-on-scroll text-white">Treinamentos e Consultorias</h2>
+        <div class="section-indicator" style="background: rgba(255,255,255,0.3);"></div>
+        <p class="lead animate-on-scroll text-white opacity-75">Capacitação especializada para transformar sua organização</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card card-modern animate-on-scroll h-100">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                  <i class="fas fa-comments" style="font-size: 2.5rem; color: #667eea;"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Comunicação Assertiva</h4>
+                  <small class="text-muted">Treinamento Especializado</small>
+                </div>
+              </div>
+              <p class="card-text">
+                Desenvolva habilidades essenciais para construir relações mais produtivas, com foco em escuta ativa, expressão clara e feedback construtivo.
+              </p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success me-2"></i>Técnicas de escuta ativa</li>
+                <li><i class="fas fa-check text-success me-2"></i>Comunicação não-violenta</li>
+                <li><i class="fas fa-check text-success me-2"></i>Gestão de conflitos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card card-modern animate-on-scroll h-100">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                  <i class="fas fa-building" style="font-size: 2.5rem; color: #667eea;"></i>
+                </div>
+                <div>
+                  <h4 class="mb-0">Cultura Organizacional</h4>
+                  <small class="text-muted">Consultoria Estratégica</small>
+                </div>
+              </div>
+              <p class="card-text">
+                Diagnóstico completo e desenvolvimento de práticas inovadoras para fortalecer a identidade, valores e propósito da sua empresa.
+              </p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success me-2"></i>Diagnóstico cultural</li>
+                <li><i class="fas fa-check text-success me-2"></i>Plano de transformação</li>
+                <li><i class="fas fa-check text-success me-2"></i>Acompanhamento contínuo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prova Social -->
+  <section id="depoimentos" class="py-5 section-gradient">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title animate-on-scroll">O Que Nossos Clientes Dizem</h2>
+        <div class="section-indicator"></div>
+        <p class="lead animate-on-scroll">Resultados reais de quem confia em nosso trabalho</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="blockquote-modern animate-on-scroll">
+            <p class="mb-3">
+              "Participar dos treinamentos da Potencialize foi um verdadeiro divisor de águas para nossa liderança. A metodologia é inovadora e os resultados foram imediatos."
+            </p>
+            <footer class="blockquote-footer">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user text-white"></i>
+                  </div>
+                </div>
+                <div>
+                  <strong>Ana Martins</strong><br>
+                  <small>Diretora de RH - Grupo Viver</small>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="blockquote-modern animate-on-scroll">
+            <p class="mb-3">
+              "As dinâmicas aplicadas foram práticas, divertidas e trouxeram resultados visíveis no engajamento e produtividade da nossa equipe."
+            </p>
+            <footer class="blockquote-footer">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <div style="width: 50px; height: 50px; background: var(--secondary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user text-white"></i>
+                  </div>
+                </div>
+                <div>
+                  <strong>Felipe Costa</strong><br>
+                  <small>Coordenador de Projetos</small>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-12 text-center">
+          <div class="row">
+            <div class="col-md-3 col-6 mb-3">
+              <div class="animate-on-scroll">
+                <h3 class="text-primary mb-0">150+</h3>
+                <small class="text-muted">Clientes Atendidos</small>
+              </div>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+              <div class="animate-on-scroll">
+                <h3 class="text-primary mb-0">98%</h3>
+                <small class="text-muted">Satisfação</small>
+              </div>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+              <div class="animate-on-scroll">
+                <h3 class="text-primary mb-0">5+</h3>
+                <small class="text-muted">Anos de Experiência</small>
+              </div>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+              <div class="animate-on-scroll">
+                <h3 class="text-primary mb-0">24/7</h3>
+                <small class="text-muted">Suporte</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulário de Captura de Leads -->
+  <section id="formulario" class="py-5 section-dark">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="text-center mb-5">
+            <h2 class="section-title animate-on-scroll text-white">Vamos Conversar?</h2>
+            <div class="section-indicator" style="background: rgba(255,255,255,0.3);"></div>
+            <p class="lead animate-on-scroll text-white opacity-75">
+              Pronto para transformar sua empresa? Entre em contato conosco!
+            </p>
+          </div>
+          <div class="form-modern animate-on-scroll">
+            <form id="contactForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="nome" class="form-label form-label-modern">
+                    <i class="fas fa-user me-2"></i>Nome Completo
+                  </label>
+                  <input type="text" class="form-control form-control-modern" id="nome" placeholder="Seu nome completo" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label form-label-modern">
+                    <i class="fas fa-envelope me-2"></i>E-mail
+                  </label>
+                  <input type="email" class="form-control form-control-modern" id="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="empresa" class="form-label form-label-modern">
+                    <i class="fas fa-building me-2"></i>Empresa
+                  </label>
+                  <input type="text" class="form-control form-control-modern" id="empresa" placeholder="Nome da sua empresa">
+                </div>
+                <div class="col-md-6">
+                  <label for="telefone" class="form-label form-label-modern">
+                    <i class="fas fa-phone me-2"></i>Telefone
+                  </label>
+                  <input type="tel" class="form-control form-control-modern" id="telefone" placeholder="(11) 99999-9999">
+                </div>
+                <div class="col-12">
+                  <label for="mensagem" class="form-label form-label-modern">
+                    <i class="fas fa-comment me-2"></i>Mensagem
+                  </label>
+                  <textarea class="form-control form-control-modern" id="mensagem" rows="4" placeholder="Conte um pouco sobre sua necessidade e como podemos ajudar..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                    <label class="form-check-label" for="newsletter">
+                      Desejo receber conteúdos exclusivos sobre desenvolvimento humano e organizacional
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-modern btn-accent-modern w-100">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Enviar Mensagem
+                    <span class="spinner-border spinner-border-sm ms-2 d-none" id="loading"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="mt-4 text-center">
+              <p class="text-muted small">
+                <i class="fas fa-shield-alt me-2"></i>
+                Seus dados estão seguros conosco. Não compartilhamos informações com terceiros.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="footer-modern text-white text-center py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h5 class="mb-3">
+            <i class="fas fa-rocket me-2"></i>Potencialize Consultoria
+          </h5>
+          <p class="text-muted">
+            Transformando pessoas e empresas através de soluções inovadoras em desenvolvimento humano e organizacional.
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="#" class="text-white-50 hover-effect">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="#" class="text-white-50 hover-effect">
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+            <a href="#" class="text-white-50 hover-effect">
+              <i class="fab fa-facebook fa-lg"></i>
+            </a>
+            <a href="#" class="text-white-50 hover-effect">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="mb-3">Links Rápidos</h6>
+          <ul class="list-unstyled">
+            <li><a href="#quem-somos" class="text-white-50 text-decoration-none hover-effect">Sobre Nós</a></li>
+            <li><a href="#produtos" class="text-white-50 text-decoration-none hover-effect">Produtos</a></li>
+            <li><a href="#treinamentos" class="text-white-50 text-decoration-none hover-effect">Serviços</a></li>
+            <li><a href="#depoimentos" class="text-white-50 text-decoration-none hover-effect">Depoimentos</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="mb-3">Contato</h6>
+          <ul class="list-unstyled text-white-50">
+            <li class="mb-2">
+              <i class="fas fa-envelope me-2"></i>
+              contato@potencialize.com
+            </li>
+            <li class="mb-2">
+              <i class="fas fa-phone me-2"></i>
+              (11) 99999-9999
+            </li>
+            <li class="mb-2">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              São Paulo, SP
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 mb-4">
+          <h6 class="mb-3">Newsletter</h6>
+          <p class="text-white-50 small">Receba conteúdos exclusivos sobre desenvolvimento humano</p>
+          <form id="newsletterForm">
+            <div class="input-group">
+              <input type="email" class="form-control form-control-modern" id="newsletterEmail" placeholder="Seu e-mail" required>
+              <button class="btn btn-accent-modern" type="submit">
+                <i class="fas fa-paper-plane"></i>
+                <span class="spinner-border spinner-border-sm ms-1 d-none" id="newsletterLoading"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-md-start text-center">
+          <p class="mb-0 text-white-50">
+            &copy; 2025 Potencialize Consultoria. Todos os direitos reservados.
+          </p>
+        </div>
+        <div class="col-md-6 text-md-end text-center">
+          <small class="text-white-50">
+            <a href="#" class="text-white-50 text-decoration-none me-3">Política de Privacidade</a>
+            <a href="#" class="text-white-50 text-decoration-none">Termos de Uso</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botão voltar ao topo -->
+  <button id="backToTop" class="btn btn-accent-modern position-fixed d-none" style="bottom: 2rem; right: 2rem; z-index: 1000; border-radius: 50%; width: 50px; height: 50px;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQ_xectxMpyZTTuNmTgUVVZAy1cr5MrUo",
+      authDomain: "consultoria-1b0b3.firebaseapp.com",
+      projectId: "consultoria-1b0b3",
+      storageBucket: "consultoria-1b0b3.firebasestorage.app",
+      messagingSenderId: "449324383443",
+      appId: "1:449324383443:web:1a001d36c77cd0060aa826",
+      measurementId: "G-CBQ0Y40Z1R"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+    // Make Firebase functions globally available
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.serverTimestamp = serverTimestamp;
+    
+    console.log("Firebase inicializado com sucesso!");
+  </script>
+
+  <script>
+    // Animações on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar-modern');
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
+      }
+    });
+
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('d-none');
+      } else {
+        backToTopBtn.classList.add('d-none');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Form submission with Firebase
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const loadingSpinner = document.getElementById('loading');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      
+      // Get form data
+      const formData = {
+        nome: document.getElementById('nome').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        empresa: document.getElementById('empresa').value.trim(),
+        telefone: document.getElementById('telefone').value.trim(),
+        mensagem: document.getElementById('mensagem').value.trim(),
+        newsletter: document.getElementById('newsletter').checked,
+        dataEnvio: serverTimestamp(),
+        userAgent: navigator.userAgent,
+        origem: 'Landing Page Potencialize'
+      };
+
+      // Validate required fields
+      if (!formData.nome || !formData.email || !formData.mensagem) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+      }
+
+      // Show loading state
+      loadingSpinner.classList.remove('d-none');
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      
+      try {
+        // Save to Firebase Firestore
+        await addDoc(collection(db, 'contatos'), formData);
+        
+        // Success feedback
+        loadingSpinner.classList.add('d-none');
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
+        // Show success message with better styling
+        showSuccessMessage();
+        
+        // Reset form
+        e.target.reset();
+        
+        // Log success (for analytics)
+        console.log('Formulário enviado com sucesso para Firebase!');
+        
+      } catch (error) {
+        console.error('Erro ao enviar formulário:', error);
+        
+        // Error handling
+        loadingSpinner.classList.add('d-none');
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        
+        showErrorMessage();
+      }
+    });
+
+    // Success message function
+    function showSuccessMessage() {
+      // Create success modal
+      const successModal = document.createElement('div');
+      successModal.innerHTML = `
+        <div class="modal fade" id="successModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border: none; border-radius: 16px;">
+              <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                  <i class="fas fa-check-circle" style="font-size: 4rem; color: #28a745;"></i>
+                </div>
+                <h4 class="mb-3">Mensagem Enviada!</h4>
+                <p class="text-muted mb-4">
+                  Obrigado pelo seu contato! Nossa equipe analisará sua mensagem e retornará em breve.
+                </p>
+                <button type="button" class="btn btn-modern btn-accent-modern" data-bs-dismiss="modal">
+                  <i class="fas fa-thumbs-up me-2"></i>Perfeito!
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(successModal);
+      const modal = new bootstrap.Modal(document.getElementById('successModal'));
+      modal.show();
+      
+      // Remove modal after closing
+      document.getElementById('successModal').addEventListener('hidden.bs.modal', () => {
+        successModal.remove();
+      });
+    }
+
+    // Error message function
+    function showErrorMessage() {
+      const errorModal = document.createElement('div');
+      errorModal.innerHTML = `
+        <div class="modal fade" id="errorModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border: none; border-radius: 16px;">
+              <div class="modal-body text-center p-5">
+                <div class="mb-4">
+                  <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: #dc3545;"></i>
+                </div>
+                <h4 class="mb-3">Ops! Algo deu errado</h4>
+                <p class="text-muted mb-4">
+                  Houve um problema ao enviar sua mensagem. Por favor, tente novamente ou entre em contato por telefone.
+                </p>
+                <div class="d-flex gap-2 justify-content-center">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Fechar
+                  </button>
+                  <button type="button" class="btn btn-modern btn-accent-modern" onclick="document.getElementById('contactForm').scrollIntoView({behavior: 'smooth'})" data-bs-dismiss="modal">
+                    Tentar Novamente
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(errorModal);
+      const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+      modal.show();
+      
+      // Remove modal after closing
+      document.getElementById('errorModal').addEventListener('hidden.bs.modal', () => {
+        errorModal.remove();
+      });
+    }
+
+    // Newsletter subscription
+    document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('newsletterEmail').value.trim();
+      const loadingSpinner = document.getElementById('newsletterLoading');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Por favor, insira um e-mail válido.');
+        return;
+      }
+
+      // Show loading
+      loadingSpinner.classList.remove('d-none');
+      submitBtn.disabled = true;
+
+      try {
+        // Save newsletter subscription to Firebase
+        await addDoc(collection(db, 'newsletter'), {
+          email: email,
+          dataInscricao: serverTimestamp(),
+          origem: 'Footer Newsletter',
+          ativo: true
+        });
+
+        // Success
+        loadingSpinner.classList.add('d-none');
+        submitBtn.disabled = false;
+        document.getElementById('newsletterEmail').value = '';
+        
+        // Show success toast
+        showToast('Inscrição realizada com sucesso! 🎉', 'success');
+        
+      } catch (error) {
+        console.error('Erro ao inscrever newsletter:', error);
+        loadingSpinner.classList.add('d-none');
+        submitBtn.disabled = false;
+        
+        showToast('Erro ao realizar inscrição. Tente novamente.', 'error');
+      }
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+      const toastId = 'toast-' + Date.now();
+      const iconClass = type === 'success' ? 'fas fa-check-circle text-success' : 'fas fa-exclamation-circle text-danger';
+      
+      const toast = document.createElement('div');
+      toast.innerHTML = `
+        <div class="toast align-items-center border-0" id="${toastId}" role="alert" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 12px;">
+          <div class="d-flex">
+            <div class="toast-body d-flex align-items-center">
+              <i class="${iconClass} me-2"></i>
+              <span>${message}</span>
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      const bsToast = new bootstrap.Toast(document.getElementById(toastId), {
+        delay: 4000
+      });
+      bsToast.show();
+      
+      // Remove toast element after hiding
+      document.getElementById(toastId).addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+      });
+    }
+
+    // Create toast container if it doesn't exist
+    function createToastContainer() {
+      const container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.className = 'toast-container position-fixed top-0 end-0 p-3';
+      container.style.zIndex = '9999';
+      document.body.appendChild(container);
+      return container;
+    }
+
+    // Analytics tracking for form interactions
+    function trackFormInteraction(action, formType) {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+          event_category: 'Form',
+          event_label: formType,
+          value: 1
+        });
+      }
+    }
+
+    // Track form focus events
+    document.getElementById('contactForm').addEventListener('focusin', () => {
+      trackFormInteraction('form_start', 'contact_form');
+    });
+
+    document.getElementById('newsletterForm').addEventListener('focusin', () => {
+      trackFormInteraction('form_start', 'newsletter_form');
+    });
+
+    // Smooth scrolling para links internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Hover effects
+    document.querySelectorAll('.hover-effect').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        el.style.transform = 'scale(1.1)';
+        el.style.color = '#667eea';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'scale(1)';
+        el.style.color = '';
+      });
+    });
+  </script>
+</body>
+</html>
