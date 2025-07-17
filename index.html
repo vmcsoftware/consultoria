@@ -904,21 +904,25 @@
     const auth = getAuth(app);
     const analytics = getAnalytics(app);
 
-    // Initialize anonymous authentication
+    // TEMPORÁRIO: Autenticação comentada até configurar no Firebase Console
     let isAuthInitialized = false;
     
     async function initializeAuth() {
-      if (isAuthInitialized) return true;
+      // TEMPORÁRIO: Retorna true para não bloquear o funcionamento
+      // if (isAuthInitialized) return true;
       
-      try {
-        await signInAnonymously(auth);
-        isAuthInitialized = true;
-        console.log("Autenticação anônima realizada com sucesso!");
-        return true;
-      } catch (error) {
-        console.error("Erro na autenticação:", error);
-        return false;
-      }
+      // try {
+      //   await signInAnonymously(auth);
+      //   isAuthInitialized = true;
+      //   console.log("Autenticação anônima realizada com sucesso!");
+      //   return true;
+      // } catch (error) {
+      //   console.error("Erro na autenticação:", error);
+      //   return false;
+      // }
+      
+      console.log("⚠️ Autenticação Firebase temporariamente desabilitada");
+      return true; // Retorna true para não bloquear
     }
 
     // Make Firebase functions globally available
@@ -928,15 +932,15 @@
     window.serverTimestamp = serverTimestamp;
     window.initializeAuth = initializeAuth;
     
-    // Auto-initialize auth
-    initializeAuth();
+    // TEMPORÁRIO: Auto-initialize auth comentado
+    // initializeAuth();
     
     // Initialize EmailJS
     emailjs.init({
       publicKey: "YOUR_PUBLIC_KEY", // Substituir pela sua chave pública do EmailJS
     });
     
-    console.log("Firebase e EmailJS inicializados com sucesso!");
+    console.log("🚀 Firebase (sem auth) e EmailJS inicializados - MODO TESTE!");
   </script>
 
   <script>
