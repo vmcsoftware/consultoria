@@ -1022,14 +1022,15 @@
       submitBtn.disabled = true;
       
       try {
-        // Ensure authentication is initialized
-        const authSuccess = await initializeAuth();
-        if (!authSuccess) {
-          throw new Error('Falha na autenticação');
-        }
+        // TEMPORÁRIO: Comentado para testar sem Firebase até configurar autenticação
+        // const authSuccess = await initializeAuth();
+        // if (!authSuccess) {
+        //   throw new Error('Falha na autenticação');
+        // }
         
-        // Save to Firebase Firestore
-        await addDoc(collection(db, 'contatos'), formData);
+        // TEMPORÁRIO: Comentado para testar sem Firebase
+        // await addDoc(collection(db, 'contatos'), formData);
+        console.log('📋 Dados que seriam salvos no Firebase (contatos):', formData);
         
         // Send email notification using EmailJS
         await sendEmailNotification(formData);
@@ -1204,19 +1205,20 @@
       submitBtn.disabled = true;
 
       try {
-        // Ensure authentication is initialized
-        const authSuccess = await initializeAuth();
-        if (!authSuccess) {
-          throw new Error('Falha na autenticação');
-        }
+        // TEMPORÁRIO: Comentado para testar sem Firebase até configurar autenticação
+        // const authSuccess = await initializeAuth();
+        // if (!authSuccess) {
+        //   throw new Error('Falha na autenticação');
+        // }
         
-        // Save newsletter subscription to Firebase
-        await addDoc(collection(db, 'newsletter'), {
-          email: email,
-          dataInscricao: serverTimestamp(),
-          origem: 'Footer Newsletter',
-          ativo: true
-        });
+        // TEMPORÁRIO: Comentado para testar sem Firebase
+        // await addDoc(collection(db, 'newsletter'), {
+        //   email: email,
+        //   dataInscricao: serverTimestamp(),
+        //   origem: 'Footer Newsletter',
+        //   ativo: true
+        // });
+        console.log('📧 Email que seria salvo no Firebase (newsletter):', { email, origem: 'Footer Newsletter' });
 
         // Success
         loadingSpinner.classList.add('d-none');
@@ -1425,20 +1427,21 @@
     // Função para solicitar download
     async function requestDownload(productType) {
       try {
-        // Ensure authentication is initialized
-        const authSuccess = await initializeAuth();
-        if (!authSuccess) {
-          throw new Error('Falha na autenticação');
-        }
+        // TEMPORÁRIO: Comentado para testar sem Firebase até configurar autenticação
+        // const authSuccess = await initializeAuth();
+        // if (!authSuccess) {
+        //   throw new Error('Falha na autenticação');
+        // }
         
-        // Salvar interesse no Firebase
-        await addDoc(collection(db, 'interesseProdutos'), {
-          produto: productType,
-          acao: 'download_solicitado',
-          timestamp: serverTimestamp(),
-          userAgent: navigator.userAgent,
-          origem: 'Modal Produto'
-        });
+        // TEMPORÁRIO: Comentado para testar sem Firebase
+        // await addDoc(collection(db, 'interesseProdutos'), {
+        //   produto: productType,
+        //   acao: 'download_solicitado',
+        //   timestamp: serverTimestamp(),
+        //   userAgent: navigator.userAgent,
+        //   origem: 'Modal Produto'
+        // });
+        console.log('🎯 Interesse que seria salvo no Firebase:', { produto: productType, acao: 'download_solicitado' });
 
         // Fechar modal atual
         const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
@@ -1458,20 +1461,21 @@
     // Função para solicitar mais informações
     async function requestMoreInfo(serviceType) {
       try {
-        // Ensure authentication is initialized
-        const authSuccess = await initializeAuth();
-        if (!authSuccess) {
-          throw new Error('Falha na autenticação');
-        }
+        // TEMPORÁRIO: Comentado para testar sem Firebase até configurar autenticação
+        // const authSuccess = await initializeAuth();
+        // if (!authSuccess) {
+        //   throw new Error('Falha na autenticação');
+        // }
         
-        // Salvar interesse no Firebase
-        await addDoc(collection(db, 'interesseProdutos'), {
-          produto: serviceType,
-          acao: 'mais_informacoes',
-          timestamp: serverTimestamp(),
-          userAgent: navigator.userAgent,
-          origem: 'Modal Produto'
-        });
+        // TEMPORÁRIO: Comentado para testar sem Firebase
+        // await addDoc(collection(db, 'interesseProdutos'), {
+        //   produto: serviceType,
+        //   acao: 'mais_informacoes',
+        //   timestamp: serverTimestamp(),
+        //   userAgent: navigator.userAgent,
+        //   origem: 'Modal Produto'
+        // });
+        console.log('ℹ️ Interesse que seria salvo no Firebase:', { produto: serviceType, acao: 'mais_informacoes' });
 
         // Fechar modal e ir para formulário de contato
         const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
@@ -1559,13 +1563,15 @@
         submitBtn.disabled = true;
 
         try {
-          // Ensure authentication is initialized
-          const authSuccess = await initializeAuth();
-          if (!authSuccess) {
-            throw new Error('Falha na autenticação');
-          }
+          // TEMPORÁRIO: Comentado para testar sem Firebase até configurar autenticação
+          // const authSuccess = await initializeAuth();
+          // if (!authSuccess) {
+          //   throw new Error('Falha na autenticação');
+          // }
           
-          await addDoc(collection(db, 'solicitacaoDownload'), formData);
+          // TEMPORÁRIO: Comentado para testar sem Firebase
+          // await addDoc(collection(db, 'solicitacaoDownload'), formData);
+          console.log('📥 Solicitação que seria salva no Firebase:', formData);
           
           // Send download email notification
           await sendDownloadEmail(formData);
