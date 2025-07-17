@@ -118,19 +118,19 @@ Substitua no arquivo `index.html`:
 ```javascript
 // Linha ~895
 emailjs.init({
-  publicKey: "SUA_PUBLIC_KEY_AQUI", // Cole sua Public Key
+  publicKey: "z2336X6tKP2xg_f9D", // Sua chave pública
 });
 
 // Linha ~975
 await emailjs.send(
-  'service_pxk2s85',       // Seu Service ID
+  'service_gqvvapf',       // Seu Service ID
   'template_contato',      // ID do template de contato
   templateParams
 );
 
 // Linha ~1010
 await emailjs.send(
-  'service_pxk2s85',          // Mesmo Service ID
+  'service_gqvvapf',          // Mesmo Service ID
   'template_confirmacao',     // ID do template de confirmação
   templateParams
 );
