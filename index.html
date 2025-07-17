@@ -1039,8 +1039,9 @@
         // Send email notification using EmailJS
         await sendEmailNotification(formData);
         
-        // Send confirmation email to client
-        await sendConfirmationEmail(formData.email, formData.nome);
+        // TEMPORÁRIO: Comentando email de confirmação até resolver o template principal
+        // await sendConfirmationEmail(formData.email, formData.nome);
+        console.log('📧 Email de confirmação seria enviado para:', formData.email);
         
         // Success feedback
         loadingSpinner.classList.add('d-none');
@@ -1157,14 +1158,25 @@
       try {
         const response = await emailjs.send(
           'service_gqvvapf',    // Seu Service ID
-          'YOUR_TEMPLATE_ID',    // Substituir pelo seu Template ID do EmailJS
+          'template_test',      // Template de teste - CRIAR NO EMAILJS
           templateParams
         );
         
-        console.log('E-mail enviado com sucesso:', response);
+        console.log('✅ E-mail enviado com sucesso:', response);
         return response;
       } catch (error) {
-        console.error('Erro ao enviar e-mail:', error);
+        console.error('❌ Erro detalhado do EmailJS:', {
+          status: error.status,
+          text: error.text,
+          message: error.message,
+          templateParams: templateParams
+        });
+        
+        if (error.status === 400) {
+          console.error('🚨 ERRO 400: Verifique se o template "template_test" existe no EmailJS');
+          throw new Error('Template não encontrado. Crie o template "template_test" no EmailJS.');
+        }
+        
         throw error;
       }
     }
