@@ -123,14 +123,14 @@ emailjs.init({
 
 // Linha ~975
 await emailjs.send(
-  'SEU_SERVICE_ID',        // Cole seu Service ID
+  'service_pxk2s85',       // Seu Service ID
   'template_contato',      // ID do template de contato
   templateParams
 );
 
 // Linha ~1010
 await emailjs.send(
-  'SEU_SERVICE_ID',           // Mesmo Service ID
+  'service_pxk2s85',          // Mesmo Service ID
   'template_confirmacao',     // ID do template de confirmação
   templateParams
 );
